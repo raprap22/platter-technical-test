@@ -1,0 +1,6 @@
+FROM node:16
+WORKDIR /app
+COPY ./product.js .
+RUN npm install express pg amqplib
+EXPOSE 9301
+CMD ["node", "product.js"]

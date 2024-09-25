@@ -1,0 +1,6 @@
+FROM node:16
+WORKDIR /app
+COPY ./payment.js .
+RUN npm install express pg amqplib
+EXPOSE 9302
+CMD ["node", "payment.js"]

@@ -1,0 +1,6 @@
+FROM node:16
+WORKDIR /app
+COPY ./user.js .
+RUN npm install express pg amqplib websocket
+EXPOSE 2323
+CMD ["node", "user.js"]

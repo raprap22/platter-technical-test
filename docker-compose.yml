@@ -1,0 +1,58 @@
+version: '3.8'
+services:
+  product:
+    build:
+      context: .
+      dockerfile: Dockerfile.product
+    ports:
+      - "9301:9301"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      - DATABASE_URL=postgres://postgres:password@postgres/product
+
+  payment:
+    build:
+      context: .
+      dockerfile: Dockerfile.payment
+    ports:
+      - "9302:9302"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      - DATABASE_URL=postgres://postgres:password@postgres/payment
+
+  user:
+    build:
+      context: .
+      dockerfile: Dockerfile.user
+    ports:
+      - "2323:2323"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      - DATABASE_URL=postgres://postgres:password@postgres/user
+
+  notification:
+    build:
+      context: .
+      dockerfile: Dockerfile.notification
+    ports:
+      - "9304:9304"
+    depends_on:
+      - rabbitmq
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"

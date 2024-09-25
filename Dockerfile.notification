@@ -1,0 +1,6 @@
+FROM node:16
+WORKDIR /app
+COPY ./notification.js .
+RUN npm install express amqplib websocket
+EXPOSE 9304
+CMD ["node", "notification.js"]
